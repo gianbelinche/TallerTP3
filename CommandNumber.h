@@ -8,8 +8,7 @@ private:
 public:
     CommandNumber(std::string command);
     bool isValid() const override;
-    void send() const override;
-    std::string recv() const override;
+    void send(Socket&& socket) const override;
     std::string getCommand() const;    
 };
 

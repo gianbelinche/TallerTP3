@@ -8,8 +8,7 @@ class CommandAyuda : public Command {
 public:
     CommandAyuda(std::string command);
     bool isValid() const override;
-    void send() const override;
-    std::string recv() const override;    
+    void send(Socket&& socket) const override;
 };
 
 #endif

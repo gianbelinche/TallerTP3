@@ -11,22 +11,7 @@ bool CommandAyuda::isValid() const {
     return false;
 }
 
-void CommandAyuda::send() const {
-    char ans[3];
-    Serializer serializer;
-    serializer.serialize(*this,ans);
-    serializer.deserialize(ans,true);
-}
-
-std::string CommandAyuda::recv() const{
-    std::string answer = "Comandos válidos:\n\tAYUDA: despliega la lista de ";
-    answer += "comandos válidos\n\tRENDIRSE: pierde el juego automáticamente";
-    answer += "\n\tXXX: Número de 3 cifras a ser enviado al servidor para ";
-    answer += "adivinar el número secreto\n";
-    Serializer serializer;
-    char* ans = (char*) malloc(answer.length() + 4);
-    serializer.serialize(answer,ans);
-    std::string new_string = serializer.deserialize(ans,false);
-    free(ans);
-    return new_string;
+void CommandAyuda::send(Socket&& socket) const {
+    char ans[2] = "h";
+    socket.Send(ans,1);
 }

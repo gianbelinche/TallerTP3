@@ -6,8 +6,7 @@ class CommandRendirse : public Command {
 public:
     CommandRendirse(std::string command);
     bool isValid() const override;
-    void send() const override;
-    std::string recv() const override;    
+    void send(Socket&& socket) const override;
 };
 
 #endif

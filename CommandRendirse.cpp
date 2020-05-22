@@ -10,18 +10,7 @@ bool CommandRendirse::isValid() const {
     return false;
 }
 
-void CommandRendirse::send() const {
-    char ans[3];
-    Serializer serializer;
-    serializer.serialize(*this,ans);
-    serializer.deserialize(ans,true);
+void CommandRendirse::send(Socket&& socket) const {
+    char ans[2] = "s";
+    socket.Send(ans,1);
 }    
-std::string CommandRendirse::recv() const{
-    std::string answer = "Perdiste\n";
-    Serializer serializer;
-    char* ans = (char*) malloc(answer.length() + 4);
-    serializer.serialize(answer,ans);
-    std::string new_string = serializer.deserialize(ans,false);
-    free(ans);
-    return new_string;
-}
