@@ -5,12 +5,14 @@
 
 int main(int argc, char* argv[]){
     CommandHandler commandHandler;
+    Socket socket;
+    socket.Connect(argv[1],argv[2]);
     while (true){
         std::string command;
         getline(std::cin,command);
         try {
-            commandHandler.send(command);
-            const std::string answer = commandHandler.recv();
+            commandHandler.send(command,std::move(socket));
+            const std::string answer = commandHandler.recv(std::move(socket));
             std::cout << answer;
             if (answer == "Perdiste\n" || answer == "Ganaste\n"){
                 break;
