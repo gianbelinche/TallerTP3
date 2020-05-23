@@ -1,15 +1,19 @@
-#include "SecretNumberParser.h"
-#include "OSError.h"
-#include "Socket.h"
-#include "ClientProxy.h"
+#include "server_SecretNumberParser.h"
+#include "common_OSError.h"
+#include "common_Socket.h"
+#include "server_ClientProxy.h"
+#include "server_ClientManager.h"
+#include <iostream>
+#include "server_Stadistics.h"
 int main(int argc,char* argv[]){
     if (argc != 3){
         std::cerr << "Error: argumentos invalidos.\n";
         return 1;
     }
     SecretNumberParser parser;
+    CircleVector vector;
     try{
-        parser.parse(argv[2]);
+        parser.parse(argv[2],std::move(vector));
     } catch (OSError& e){
         std::cerr << e.what();
         return 1;
@@ -17,9 +21,15 @@ int main(int argc,char* argv[]){
     Socket server_socket;
     server_socket.Bind(0,argv[1]);
     server_socket.Listen(1);
-    Socket client_socket;
-    server_socket.Accept(std::move(client_socket));
-    ClientProxy client1(std::move(client_socket),parser.next());
-    client1.run();
+
+    Stadistics stadistics;
+    ClientManager client_manager(std::move(server_socket),std::move(vector),
+    std::move(stadistics));
+    char c = 0;
+    while (c != 'q'){
+        std::cin.get(c);
+    }
+    client_manager.stop();
+    stadistics.print();
     return 0;
 }
