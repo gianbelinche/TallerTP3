@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
-#include "CommandHandler.h"
-#include "OSError.h"
+#include "client_CommandHandler.h"
+#include "common_OSError.h"
 
 int main(int argc, char* argv[]){
     CommandHandler commandHandler;
