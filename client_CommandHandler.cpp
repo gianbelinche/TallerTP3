@@ -4,6 +4,7 @@
 #include "common_CommandRendirse.h"
 #include "common_OSError.h"
 #include <string>
+#include <utility>
 
 void CommandHandler::send(std::string command,Socket&& socket) {
     CommandAyuda* commandAyuda = new CommandAyuda(command);

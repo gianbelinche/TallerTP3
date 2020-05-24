@@ -1,6 +1,7 @@
 #include "server_ClientManager.h"
 #include "common_OSError.h"
 #include <list>
+#include <utility>
 
 ClientManager::ClientManager(Socket&& server_socket,CircleVector&& vector,
 Stadistics&& stadistics) : server_socket(std::move(server_socket)),
