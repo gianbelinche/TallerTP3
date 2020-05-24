@@ -93,7 +93,8 @@ void ClientProxy::run(){
         } else if (buff[0] == 'n'){
             char buff2[2];
             socket.Recv(buff2,2);
-            short number = ntohs(*((short*)buff2));
+            short* number_ptr = (short*) buff2;
+            short number = ntohs(*number_ptr);
             answer += this->isNumberValid(number);
         }
         Serializer serializer;
