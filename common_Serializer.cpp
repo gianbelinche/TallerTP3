@@ -1,7 +1,5 @@
 #include "common_Serializer.h"
 #include <arpa/inet.h>
-#include "common_CommandAyuda.h"
-#include "common_CommandRendirse.h"
 #include "common_CommandNumber.h"
 #include <string>
 #define COMMAND true

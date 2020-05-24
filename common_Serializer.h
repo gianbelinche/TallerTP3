@@ -2,8 +2,6 @@
 #define CLASS_SERIALIZER
 
 #include <string>
-class CommandAyuda;
-class CommandRendirse;
 class CommandNumber;
 
 class Serializer {
