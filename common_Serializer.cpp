@@ -7,16 +7,6 @@
 #define COMMAND true
 #define STRING false
 
-int Serializer::serialize(const CommandAyuda command, char* result) const{
-    result[0] = 'h';
-    return 1;
-}
-
-int Serializer::serialize(const CommandRendirse command, char* result) const{
-    result[0] = 's';
-    return 1;
-}
-
 int Serializer::serialize(const CommandNumber commandNumber,char* result)const{
     result[0] = 'n';
     short number = (short) stoi(commandNumber.getCommand());
@@ -40,21 +30,3 @@ int Serializer::serialize(const std::string string, char* result) const{
     return length + 4;
 }
 
-const std::string Serializer::deserialize(const char* string,bool mode) const {
-    std::string answer(string,1);
-    if (mode == COMMAND){
-        return answer;
-    }
-    char length[4];
-    length[0] = string[0];
-    length[1] = string[1];
-    length[2] = string[2];
-    length[3] = string[3];
-    int* length_ptr = (int*) length;
-    int length_int = ntohl(*length_ptr);
-    std::string ans;
-    for (int i = 0; i<length_int; i++){
-        ans.append(1,string[i + 4]);
-    }
-    return ans;
-}

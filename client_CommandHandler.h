@@ -6,8 +6,9 @@
 
 class CommandHandler {
 private:
-    Command* command;
+    Command command;
 public:
+    CommandHandler();
     //Envia un comando a través del socket
     //En caso de que el comando sea invalido
     //Lanza una excepción
