@@ -22,8 +22,12 @@ private:
 public:
     ClientManager(Socket&& server_socket,CircleVector&& vector,
     Stadistics&& stadistics);
+    //Comienza a aceptar e inicializar los distintos clientes
+    //Si ocurre una excepcion mientras aun se quiere aceptar clientes,
+    //Esta es propagada
     void run();
     void operator()();
+    //Cierra el socket del server, y deja de aceptar nuevos clientes
     void stop();
     ~ClientManager();
 };

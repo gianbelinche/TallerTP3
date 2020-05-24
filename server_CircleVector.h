@@ -10,7 +10,10 @@ public:
     CircleVector();
     //CircleVector(CircleVector& copy);
     //CircleVector& operator=(CircleVector& copy);
+    //Inserta un elemento al final del vector
     void push_back(const short val);
+    //Devuelve el siguiente elemento del vector
+    //En caso de llegar al final, vuelve a empezar desde el principio
     short next();
 };
 

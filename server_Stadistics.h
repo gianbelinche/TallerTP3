@@ -12,8 +12,11 @@ public:
     Stadistics() : wins(0), loses(0) {}
     Stadistics (const Stadistics& copy) = delete;
     Stadistics& operator=(const Stadistics& copy) = delete;
+    //Aumenta en 1 la cantidad de victoras
     void win();
+    //Aumenta en 1 la cantidad de derrotas
     void lose();
+    //Muestra por pantalla los resultados actuales
     void print();    
 };
 

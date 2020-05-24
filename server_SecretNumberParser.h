@@ -10,6 +10,8 @@ class SecretNumberParser {
 private:
     std::ifstream file;
 public:
+    //Parsea el archivo de entrada, y guarda el contenido en el vector
+    //Si algun numero no cumple las condiciones necesarias, tira excepcion
     void parse(std::string file_name,CircleVector&& vector);
 };
 

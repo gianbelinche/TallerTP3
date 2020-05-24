@@ -16,9 +16,12 @@ private:
     std::thread thread;
 public:
     ClientProxy(Socket&& socket,short number,Stadistics&& stadistics);
+    //Recibe el comando del cliente y genera la respuesta adecuada
     void run();
     void operator()();
+    //Espera a que se termine de hablar con el cliente
     void join();
+    //Devuelve un booleano que indica si no se sigue hablando con el cliente
     bool isDead() const;
     ~ClientProxy();
 };

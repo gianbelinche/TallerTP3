@@ -8,7 +8,12 @@ class CommandHandler {
 private:
     Command* command;
 public:
+    //Envia un comando a través del socket
+    //En caso de que el comando sea invalido
+    //Lanza una excepción
     void send(const std::string command,Socket&& socket);
+    //Recibe la respuesta a un comando a través del socket
+    //Devuelve una string con esa respuesta
     const std::string recv(Socket&& socket) const;        
 };
 
