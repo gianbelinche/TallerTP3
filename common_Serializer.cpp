@@ -3,6 +3,7 @@
 #include "common_CommandAyuda.h"
 #include "common_CommandRendirse.h"
 #include "common_CommandNumber.h"
+#include <string>
 #define COMMAND true
 #define STRING false
 
@@ -16,7 +17,7 @@ int Serializer::serialize(const CommandRendirse command, char* result) const{
     return 1;
 }
 
-int Serializer::serialize(const CommandNumber commandNumber, char* result) const{
+int Serializer::serialize(const CommandNumber commandNumber,char* result)const{
     result[0] = 'n';
     short number = (short) stoi(commandNumber.getCommand());
     number = htons(number);

@@ -1,5 +1,6 @@
 #include "server_ClientManager.h"
 #include "common_OSError.h"
+#include <list>
 
 ClientManager::ClientManager(Socket&& server_socket,CircleVector&& vector,
 Stadistics&& stadistics) : server_socket(std::move(server_socket)),
@@ -25,7 +26,7 @@ void ClientManager::run(){
             (std::move(*client_socket),vector.next(),std::move(stadistics)));
             list.push_back(std::move(client));
         }    
-    } catch (OSError& e){
+    } catch(OSError& e){
         if (keep_accepting == true){
             throw OSError(e.what());
         }

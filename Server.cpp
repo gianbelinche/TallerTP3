@@ -14,7 +14,7 @@ int main(int argc,char* argv[]){
     CircleVector vector;
     try{
         parser.parse(argv[2],std::move(vector));
-    } catch (OSError& e){
+    } catch(OSError& e){
         std::cerr << e.what();
         return 1;
     }

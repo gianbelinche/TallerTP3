@@ -14,7 +14,7 @@ bool CommandNumber::isValid() const {
         int number = stoi(command);
         if (number > std::numeric_limits<short>::max()) return false;
         if (number < std::numeric_limits<short>::min()) return false;
-    } catch (const std::out_of_range& e){
+    } catch(const std::out_of_range& e){
         return false; //Si el numero se va de los limites de int
         //la unica forma de darse cuenta es haciendo el catch
     }

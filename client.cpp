@@ -17,7 +17,7 @@ int main(int argc, char* argv[]){
             if (answer == "Perdiste\n" || answer == "Ganaste\n"){
                 break;
             }
-        } catch (OSError& e){
+        } catch(OSError& e){
             std::cout << e.what();
         }// catch (...){
            // std::cout << "Unknown Error\n";

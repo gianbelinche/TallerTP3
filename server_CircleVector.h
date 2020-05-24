@@ -10,7 +10,7 @@ public:
     CircleVector();
     //CircleVector(CircleVector& copy);
     //CircleVector& operator=(CircleVector& copy);
-    void push_back (const short val);
+    void push_back(const short val);
     short next();
 };
 

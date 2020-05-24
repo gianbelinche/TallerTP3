@@ -1,5 +1,6 @@
 #include "common_CommandRendirse.h"
 #include "common_Serializer.h"
+#include <string>
 
 CommandRendirse::CommandRendirse(std::string command) : Command(command) {}
 

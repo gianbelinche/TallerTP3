@@ -7,7 +7,7 @@
 OSError::OSError(const char* fmt,...) noexcept {
     //int _errno = errno;
     va_list args;
-    va_start (args, fmt);
+    va_start(args, fmt);
     vsnprintf(msg_error, BUF_LEN, fmt, args);
     va_end(args);
 

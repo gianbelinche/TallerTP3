@@ -1,5 +1,6 @@
 #include "common_Command.h"
 #include <arpa/inet.h>
+#include <string>
 
 std::string Command::recv(Socket&& socket) const{
     char ans[4];

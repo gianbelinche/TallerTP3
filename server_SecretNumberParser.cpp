@@ -1,6 +1,7 @@
 #include "server_SecretNumberParser.h"
 #include "common_OSError.h"
 #include <functional>
+#include <string>
 
 bool hasRepeatedDigits(short number){
     short first_digit = number % 10;
@@ -8,7 +9,6 @@ bool hasRepeatedDigits(short number){
     short third_digit = number/100;
     return (first_digit == second_digit || first_digit == third_digit
      || second_digit == third_digit);
-
 }
 
 void SecretNumberParser::parse(std::string file_name,CircleVector&& vector){

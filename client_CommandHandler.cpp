@@ -3,6 +3,7 @@
 #include "common_CommandNumber.h"
 #include "common_CommandRendirse.h"
 #include "common_OSError.h"
+#include <string>
 
 void CommandHandler::send(std::string command,Socket&& socket) {
     CommandAyuda* commandAyuda = new CommandAyuda(command);
@@ -24,7 +25,8 @@ void CommandHandler::send(std::string command,Socket&& socket) {
         delete commandRendirse;
         delete commandNumber;
         delete commandAyuda;
-        throw OSError("Error: comando inválido. Escriba AYUDA para obtener ayuda\n");
+        throw 
+        OSError("Error: comando inválido. Escriba AYUDA para obtener ayuda\n");
     }
     (this->command)->send(std::move(socket));
 }

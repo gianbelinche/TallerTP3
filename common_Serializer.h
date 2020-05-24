@@ -21,7 +21,6 @@ public:
     int serialize(const std::string string, char* result) const;
 
     const std::string deserialize(const char* string,bool mode) const;
-
 };
 
 #endif

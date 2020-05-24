@@ -20,6 +20,7 @@ private:
     const char* port,bindorconnect_t boc);
     int auxSendAndRecv(char* buffer,size_t len,int send_or_recv);
     bool closed;
+
 public:
     Socket();
     Socket(Socket& copy) = delete;
@@ -52,8 +53,5 @@ public:
     void Close();
     ~Socket();    
 };
-
-
-
 
 #endif

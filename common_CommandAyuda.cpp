@@ -1,6 +1,7 @@
 #include "common_CommandAyuda.h"
 #include "common_Serializer.h"
 #include <stdlib.h>
+#include <string>
 
 CommandAyuda::CommandAyuda(std::string command) : Command(command) {}
 

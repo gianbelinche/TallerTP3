@@ -28,26 +28,30 @@ std::string ClientProxy::isNumberValid(short number){
     int correct = 0;
     int regular = 0;
     int bad = 0;
-    if (first_digit == second_digit || first_digit == third_digit || second_digit == third_digit){
+    if (first_digit == second_digit || first_digit == third_digit || 
+    second_digit == third_digit){
         return "Número inválido. Debe ser de 3 cifras no repetidas\n";
     }
     if (first_digit == secret_number_first){
         correct += 1;
-    } else if (first_digit == secret_number_second || first_digit == secret_number_third){
+    } else if (first_digit == secret_number_second || 
+    first_digit == secret_number_third){
         regular += 1;
     } else {
         bad += 1;
     }
     if (second_digit == secret_number_second){
         correct += 1;
-    } else if (second_digit == secret_number_first || second_digit == secret_number_third) {
+    } else if (second_digit == secret_number_first || 
+    second_digit == secret_number_third) {
         regular += 1;
     } else {
         bad += 1;
     }
     if (third_digit == secret_number_third){
         correct +=1;
-    } else if (third_digit == secret_number_first || third_digit == secret_number_second){
+    } else if (third_digit == secret_number_first || 
+    third_digit == secret_number_second){
         regular += 1;
     } else {
         bad += 1;
@@ -57,7 +61,8 @@ std::string ClientProxy::isNumberValid(short number){
     }
     std::string answer = "";
     if (correct != 0 && regular != 0) {
-        answer += std::to_string(correct) + " bien, " + std::to_string(regular) + " regular";
+        answer += std::to_string(correct) + " bien, ";
+        answer += std::to_string(regular) + " regular";
     } else if (correct != 0){
         answer += std::to_string(correct) + " bien";
     } else if (regular !=0) {
@@ -78,9 +83,9 @@ void ClientProxy::run(){
         std::string answer = "";
         if (buff[0] == 'h'){
             answer += "Comandos válidos:\n\tAYUDA: despliega la lista de ";
-            answer += "comandos válidos\n\tRENDIRSE: pierde el juego automáticamente";
-            answer += "\n\tXXX: Número de 3 cifras a ser enviado al servidor para ";
-            answer += "adivinar el número secreto\n";
+            answer += "comandos válidos\n\tRENDIRSE: pierde el juego";
+            answer += " automáticamente\n\tXXX: Número de 3 cifras a ser ";
+            answer += "enviado al servidor para adivinar el número secreto\n";
         } else if (buff[0] == 's'){
             trys = 10;
             stadistics.lose();

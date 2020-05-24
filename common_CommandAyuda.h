@@ -6,7 +6,7 @@
 
 class CommandAyuda : public Command {
 public:
-    CommandAyuda(std::string command);
+    explicit CommandAyuda(std::string command);
     bool isValid() const override;
     void send(Socket&& socket) const override;
 };

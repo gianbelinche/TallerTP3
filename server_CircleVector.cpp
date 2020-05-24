@@ -19,7 +19,7 @@ CircleVector& CircleVector::operator=(CircleVector& copy){
     return *this;
 }*/
 
-void CircleVector::push_back (const short val){
+void CircleVector::push_back(const short val){
     vector.push_back(val);
 }
 
