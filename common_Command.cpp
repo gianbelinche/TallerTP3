@@ -5,7 +5,8 @@
 std::string Command::recv(Socket&& socket) const{
     char ans[4];
     socket.Recv(ans,4);
-    int size = ntohl(*(int*) ans);
+    int* size_ptr = (int*) ans;
+    int size = ntohl(*size_ptr);
     char* ans2 = (char*) malloc(size + 1);
     socket.Recv(ans2,size);
     ans2[size] = '\0';
