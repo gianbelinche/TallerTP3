@@ -8,8 +8,6 @@ private:
     std::vector<short> vector;  
 public:
     CircleVector();
-    //CircleVector(CircleVector& copy);
-    //CircleVector& operator=(CircleVector& copy);
     //Inserta un elemento al final del vector
     void push_back(const short val);
     //Devuelve el siguiente elemento del vector

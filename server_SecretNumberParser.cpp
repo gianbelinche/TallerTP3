@@ -14,7 +14,6 @@ bool hasRepeatedDigits(short number){
 void SecretNumberParser::parse(std::string file_name,CircleVector&& vector){
     file.open(file_name);
     std::string line;
-    //CircleVector vector;
     while (getline(file,line)){
         short number = (short) stoi(line);
         if (number < 100 || number > 999){
@@ -26,5 +25,4 @@ void SecretNumberParser::parse(std::string file_name,CircleVector&& vector){
         vector.push_back(number);
     }
     file.close();
-    //return std::ref(vector);
 }

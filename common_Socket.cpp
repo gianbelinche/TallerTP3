@@ -133,7 +133,6 @@ void Socket::Listen(int client_amount){
 }
 
 void Socket::Accept(Socket&& new_socket){
-    //Socket new_socket;
     int error = ERROR;
     while (error == ERROR){
         error = accept(num_socket,adress,len_adress);
@@ -142,5 +141,4 @@ void Socket::Accept(Socket&& new_socket){
         }
     }
     new_socket.num_socket = error;
-    //return std::move(new_socket);
 }

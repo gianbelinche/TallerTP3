@@ -12,8 +12,10 @@ private:
     short secret_number;
     Stadistics&& stadistics;
     std::string isNumberValid(short number);
+    std::string calculateNumber(short number);
     int trys;
     std::thread thread;
+    bool is_valid;
 public:
     ClientProxy(Socket&& socket,short number,Stadistics&& stadistics);
     //Recibe el comando del cliente y genera la respuesta adecuada

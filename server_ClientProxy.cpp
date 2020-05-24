@@ -3,61 +3,40 @@
 #include <string>
 #include "common_Serializer.h"
 #include <arpa/inet.h>
+#include <vector>
 
 ClientProxy::ClientProxy(Socket&& socket,short number,Stadistics&& stadistics):
 socket(std::move(socket)), secret_number(number), 
-stadistics(std::move(stadistics)), trys(0), thread(std::ref(*this)) {}
+stadistics(std::move(stadistics)), trys(0), thread(std::ref(*this)),
+is_valid(true) {}
 
-std::string ClientProxy::isNumberValid(short number){
-    trys++;
-    if (trys >= 10){
-        trys = 10;
-        stadistics.lose();
-        return "Perdiste\n";
-    }
-    short secret_number_first = secret_number % 10;
-    short secret_number_second = (secret_number/10) % 10;
-    short secret_number_third = secret_number/100;
-    if (number < 100 || number > 999){
-        return "Número inválido. Debe ser de 3 cifras no repetidas\n";
-    }
-    short first_digit = number % 10;
-    short second_digit = (number/10) % 10;
-    short third_digit = number/100;
-
+std::string ClientProxy::calculateNumber(short number){
+    if (!is_valid) return "";
+    std::vector<short> secret_digits;
+    secret_digits.push_back(secret_number % 10);
+    secret_digits.push_back((secret_number/10) % 10);
+    secret_digits.push_back(secret_number/100);
+    std::vector<short> number_digits;
+    number_digits.push_back(number % 10);
+    number_digits.push_back((number/10) % 10);
+    number_digits.push_back(number/100);
     int correct = 0;
     int regular = 0;
-    int bad = 0;
-    if (first_digit == second_digit || first_digit == third_digit || 
-    second_digit == third_digit){
-        return "Número inválido. Debe ser de 3 cifras no repetidas\n";
+
+    for (int i = 0; i < 3; i++){
+        for (int j = 0; j < 3; j++){
+            if (i == j && secret_digits[i] == number_digits[j]) correct++;
+            if (i != j && secret_digits[i] == number_digits[j]) regular++;
+        }
     }
-    if (first_digit == secret_number_first){
-        correct += 1;
-    } else if (first_digit == secret_number_second || 
-    first_digit == secret_number_third){
-        regular += 1;
-    } else {
-        bad += 1;
-    }
-    if (second_digit == secret_number_second){
-        correct += 1;
-    } else if (second_digit == secret_number_first || 
-    second_digit == secret_number_third) {
-        regular += 1;
-    } else {
-        bad += 1;
-    }
-    if (third_digit == secret_number_third){
-        correct +=1;
-    } else if (third_digit == secret_number_first || 
-    third_digit == secret_number_second){
-        regular += 1;
-    } else {
-        bad += 1;
-    }
+    int bad = 3 - correct - regular;
     if (bad == 3){
         return "3 mal\n";
+    }
+    if (correct == 3){
+        trys = 10;
+        stadistics.win();
+        return "Ganaste\n";
     }
     std::string answer = "";
     if (correct != 0 && regular != 0) {
@@ -68,12 +47,32 @@ std::string ClientProxy::isNumberValid(short number){
     } else if (regular !=0) {
         answer += std::to_string(regular) + " regular";
     }
-    if (correct == 3){
-        trys = 10;
-        stadistics.win();
-        return "Ganaste\n";
-    }
     return answer + "\n";
+}
+
+std::string ClientProxy::isNumberValid(short number){
+    trys++;
+    if (trys >= 10){
+        is_valid = false;
+        trys = 10;
+        stadistics.lose();
+        return "Perdiste\n";
+    }
+    if (number < 100 || number > 999){
+        is_valid = false;
+        return "Número inválido. Debe ser de 3 cifras no repetidas\n";
+    }
+    short first_digit = number % 10;
+    short second_digit = (number/10) % 10;
+    short third_digit = number/100;
+
+    if (first_digit == second_digit || first_digit == third_digit || 
+    second_digit == third_digit){
+        is_valid = false;
+        return "Número inválido. Debe ser de 3 cifras no repetidas\n";
+    }
+    is_valid = true;
+    return "";
 }
 
 void ClientProxy::run(){
@@ -96,6 +95,7 @@ void ClientProxy::run(){
             short* number_ptr = (short*) buff2;
             short number = ntohs(*number_ptr);
             answer += this->isNumberValid(number);
+            answer += this->calculateNumber(number);
         }
         Serializer serializer;
         char* serialized_answer = (char*) malloc(answer.length() + 4);

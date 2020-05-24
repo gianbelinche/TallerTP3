@@ -15,7 +15,7 @@ void ClientManager::run(){
             for (it = list.begin(); it != list.end(); it++){
                 if ((*(*it)).isDead()){
                     (*(*it)).join();
-                    list.erase(it);//revisar en programa de prueba
+                    list.erase(it);
                 }
             }
 
