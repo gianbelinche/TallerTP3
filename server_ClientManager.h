@@ -21,7 +21,7 @@ private:
     std::atomic<bool> keep_accepting;
 public:
     ClientManager(Socket&& server_socket,CircleVector&& vector,
-    Stadistics&& stadistics);
+    Stadistics&& stadistics,char* port);
     //Comienza a aceptar e inicializar los distintos clientes
     //Si ocurre una excepcion mientras aun se quiere aceptar clientes,
     //Esta es propagada
