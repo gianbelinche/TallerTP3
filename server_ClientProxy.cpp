@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include "common_Serializer.h"
+#include "server_NumberCalculator.h"
 #include <arpa/inet.h>
 #include <vector>
 
@@ -9,46 +10,6 @@ ClientProxy::ClientProxy(Socket&& socket,short number,Stadistics&& stadistics):
 socket(std::move(socket)), secret_number(number), 
 stadistics(std::move(stadistics)), trys(0), thread(std::ref(*this)),
 is_valid(true) {}
-
-std::string ClientProxy::calculateNumber(short number){
-    if (!is_valid) return "";
-    std::vector<short> secret_digits;
-    secret_digits.push_back(secret_number % 10);
-    secret_digits.push_back((secret_number/10) % 10);
-    secret_digits.push_back(secret_number/100);
-    std::vector<short> number_digits;
-    number_digits.push_back(number % 10);
-    number_digits.push_back((number/10) % 10);
-    number_digits.push_back(number/100);
-    int correct = 0;
-    int regular = 0;
-
-    for (int i = 0; i < 3; i++){
-        for (int j = 0; j < 3; j++){
-            if (i == j && secret_digits[i] == number_digits[j]) correct++;
-            if (i != j && secret_digits[i] == number_digits[j]) regular++;
-        }
-    }
-    int bad = 3 - correct - regular;
-    if (bad == 3){
-        return "3 mal\n";
-    }
-    if (correct == 3){
-        trys = 10;
-        stadistics.win();
-        return "Ganaste\n";
-    }
-    std::string answer = "";
-    if (correct != 0 && regular != 0) {
-        answer += std::to_string(correct) + " bien, ";
-        answer += std::to_string(regular) + " regular";
-    } else if (correct != 0){
-        answer += std::to_string(correct) + " bien";
-    } else if (regular !=0) {
-        answer += std::to_string(regular) + " regular";
-    }
-    return answer + "\n";
-}
 
 std::string ClientProxy::isNumberValid(short number){
     trys++;
@@ -95,7 +56,10 @@ void ClientProxy::run(){
             short* number_ptr = (short*) buff2;
             short number = ntohs(*number_ptr);
             answer += this->isNumberValid(number);
-            answer += this->calculateNumber(number);
+            NumberCalculator calculator(number,secret_number);
+            if (is_valid){
+                answer += calculator.calculate(trys,stadistics);
+            }
         }
         Serializer serializer;
         char* serialized_answer = (char*) malloc(answer.length() + 4);
