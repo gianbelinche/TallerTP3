@@ -45,7 +45,6 @@ void ClientManager::stop(){
     for (it = list.begin(); it != list.end(); it++){
         (*(*it)).join();
     }
-    list.clear();
 }
 
 ClientManager::~ClientManager(){

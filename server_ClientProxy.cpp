@@ -51,13 +51,13 @@ void ClientProxy::operator()(){
 }
 
 void ClientProxy::join(){
-    thread.join();
-}
-
-ClientProxy::~ClientProxy(){
     if (thread.joinable()){
         thread.join();    
     }
+}
+
+ClientProxy::~ClientProxy(){
+    this->join();
 }
 
 bool ClientProxy::isDead() const{
