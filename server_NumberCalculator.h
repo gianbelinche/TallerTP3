@@ -3,15 +3,16 @@
 #include <sstream>
 #include <vector>
 #include "server_Stadistics.h"
+#include <inttypes.h>
 
 class NumberCalculator {
 private:
-    short number;
-    std::vector<short> number_digits;
-    std::vector<short> secret_digits;
+    uint16_t number;
+    std::vector<uint16_t> number_digits;
+    std::vector<uint16_t> secret_digits;
     Stadistics& stadistics;
 public:        
-    NumberCalculator(short number,short secret_number,Stadistics& stadistics);
+    NumberCalculator(uint16_t number,uint16_t secret_number,Stadistics& stadistics);
     bool isValid(int& trys,std::stringstream& ss);
     void calculate(int& trys,std::stringstream& ss);
 };

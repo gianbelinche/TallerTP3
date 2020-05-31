@@ -5,16 +5,17 @@
 #include <string>
 #include <thread>
 #include "server_Stadistics.h"
+#include <inttypes.h>
 
 class ClientProxy {
 private:
     Socket&& socket;
-    short secret_number;
+    uint16_t secret_number;
     Stadistics&& stadistics;
     int trys;
     std::thread thread;
 public:
-    ClientProxy(Socket&& socket,short number,Stadistics&& stadistics);
+    ClientProxy(Socket&& socket,uint16_t number,Stadistics&& stadistics);
     //Recibe el comando del cliente y genera la respuesta adecuada
     void run();
     void operator()();

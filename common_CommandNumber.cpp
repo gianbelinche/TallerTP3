@@ -3,6 +3,7 @@
 #include <limits>
 #include <stdexcept>
 #include "common_Serializer.h"
+#include <inttypes.h>
 
 CommandNumber::CommandNumber(std::string command) : Command(command) {}
 
@@ -12,8 +13,8 @@ bool CommandNumber::isValid() const {
     }
     try{
         int number = stoi(command);
-        if (number > std::numeric_limits<short>::max()) return false;
-        if (number < std::numeric_limits<short>::min()) return false;
+        if (number > std::numeric_limits<uint16_t>::max()) return false;
+        if (number < std::numeric_limits<uint16_t>::min()) return false;
     } catch(const std::out_of_range& e){
         return false; //Si el numero se va de los limites de int
         //la unica forma de darse cuenta es haciendo el catch

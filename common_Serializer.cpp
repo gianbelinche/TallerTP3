@@ -2,12 +2,13 @@
 #include <arpa/inet.h>
 #include "common_CommandNumber.h"
 #include <string>
+#include <inttypes.h>
 #define COMMAND true
 #define STRING false
 
 int Serializer::serialize(const CommandNumber commandNumber,char* result)const{
     result[0] = 'n';
-    short number = (short) stoi(commandNumber.getCommand());
+    uint16_t number = (uint16_t) stoi(commandNumber.getCommand());
     number = htons(number);
     char* ptr = (char*) &number;
     result[1] = ptr[0];

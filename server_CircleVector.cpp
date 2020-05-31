@@ -2,15 +2,15 @@
 
 CircleVector::CircleVector() : pos(0), vector() {}
 
-void CircleVector::push_back(const short val){
+void CircleVector::push_back(const uint16_t val){
     vector.push_back(val);
 }
 
-short CircleVector::next(){
+uint16_t CircleVector::next(){
     if (pos == vector.size()){
         pos = 0;
     }
-    short ans = vector[pos];
+    uint16_t ans = vector[pos];
     pos++;
     return ans;
 }

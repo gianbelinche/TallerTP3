@@ -6,7 +6,7 @@
 #include <arpa/inet.h>
 #include <vector>
 
-ClientProxy::ClientProxy(Socket&& socket,short number,Stadistics&& stadistics):
+ClientProxy::ClientProxy(Socket&& socket,uint16_t number,Stadistics&& stadistics):
 socket(std::move(socket)), secret_number(number), 
 stadistics(std::move(stadistics)), trys(0), thread(std::ref(*this)) {}
 
@@ -27,8 +27,8 @@ void ClientProxy::run(){
         } else if (buff == 'n'){
             char buff2[2];
             socket.Recv(buff2,2);
-            short* number_ptr = (short*) buff2;
-            short number = ntohs(*number_ptr);
+            uint16_t* number_ptr = (uint16_t*) buff2;
+            uint16_t number = ntohs(*number_ptr);
             NumberCalculator calculator(number,secret_number,stadistics);
             bool is_valid = calculator.isValid(trys,answer);
             if (is_valid){

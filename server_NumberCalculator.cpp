@@ -1,6 +1,6 @@
 #include "server_NumberCalculator.h"
 
-NumberCalculator::NumberCalculator(short number,short secret_number,
+NumberCalculator::NumberCalculator(uint16_t number,uint16_t secret_number,
  Stadistics& stadistics) : number(number), stadistics(stadistics){
     number_digits.push_back(number % 10);
     number_digits.push_back((number/10) % 10);
