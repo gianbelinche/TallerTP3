@@ -11,7 +11,6 @@ private:
     Socket&& socket;
     short secret_number;
     Stadistics&& stadistics;
-    std::string isNumberValid(short number);
     int trys;
     std::thread thread;
     bool is_valid;

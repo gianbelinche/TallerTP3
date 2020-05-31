@@ -1,6 +1,7 @@
 #include "server_NumberCalculator.h"
 
-NumberCalculator::NumberCalculator(short number,short secret_number) {
+NumberCalculator::NumberCalculator(short number,short secret_number,
+ Stadistics& stadistics) : number(number), stadistics(stadistics){
     number_digits.push_back(number % 10);
     number_digits.push_back((number/10) % 10);
     number_digits.push_back(number/100);
@@ -9,7 +10,30 @@ NumberCalculator::NumberCalculator(short number,short secret_number) {
     secret_digits.push_back(secret_number/100);
 }
 
-std::string NumberCalculator::calculate(int& trys,Stadistics& stadistics){
+std::string NumberCalculator::isValid(int& trys,bool& is_valid){
+    trys++;
+    if (trys >= 10){
+        is_valid = false;
+        trys = 10;
+        stadistics.lose();
+        return "Perdiste\n";
+    }
+    if (number < 100 || number > 999){
+        is_valid = false;
+        return "Número inválido. Debe ser de 3 cifras no repetidas\n";
+    }
+
+    if (number_digits[0] == number_digits[1] || 
+    number_digits[0] == number_digits[2] || 
+    number_digits[1] == number_digits[2]){
+        is_valid = false;
+        return "Número inválido. Debe ser de 3 cifras no repetidas\n";
+    }
+    is_valid = true;
+    return "";    
+}
+
+std::string NumberCalculator::calculate(int& trys){
     int correct = 0;
     int regular = 0;
 

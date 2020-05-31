@@ -11,31 +11,6 @@ socket(std::move(socket)), secret_number(number),
 stadistics(std::move(stadistics)), trys(0), thread(std::ref(*this)),
 is_valid(true) {}
 
-std::string ClientProxy::isNumberValid(short number){
-    trys++;
-    if (trys >= 10){
-        is_valid = false;
-        trys = 10;
-        stadistics.lose();
-        return "Perdiste\n";
-    }
-    if (number < 100 || number > 999){
-        is_valid = false;
-        return "Número inválido. Debe ser de 3 cifras no repetidas\n";
-    }
-    short first_digit = number % 10;
-    short second_digit = (number/10) % 10;
-    short third_digit = number/100;
-
-    if (first_digit == second_digit || first_digit == third_digit || 
-    second_digit == third_digit){
-        is_valid = false;
-        return "Número inválido. Debe ser de 3 cifras no repetidas\n";
-    }
-    is_valid = true;
-    return "";
-}
-
 void ClientProxy::run(){
     while (true){
         char buff[1];
@@ -55,10 +30,10 @@ void ClientProxy::run(){
             socket.Recv(buff2,2);
             short* number_ptr = (short*) buff2;
             short number = ntohs(*number_ptr);
-            answer += this->isNumberValid(number);
-            NumberCalculator calculator(number,secret_number);
+            NumberCalculator calculator(number,secret_number,stadistics);
+            answer += calculator.isValid(trys,is_valid);
             if (is_valid){
-                answer += calculator.calculate(trys,stadistics);
+                answer += calculator.calculate(trys);
             }
         }
         Serializer serializer;
