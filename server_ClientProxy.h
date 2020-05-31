@@ -13,7 +13,6 @@ private:
     Stadistics&& stadistics;
     int trys;
     std::thread thread;
-    bool is_valid;
 public:
     ClientProxy(Socket&& socket,short number,Stadistics&& stadistics);
     //Recibe el comando del cliente y genera la respuesta adecuada

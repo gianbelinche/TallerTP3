@@ -1,6 +1,6 @@
 #ifndef CLASS_NUMBER_CALCULATOR
 #define CLASS_NUMBER_CALCULATOR
-#include <string>
+#include <sstream>
 #include <vector>
 #include "server_Stadistics.h"
 
@@ -12,8 +12,8 @@ private:
     Stadistics& stadistics;
 public:        
     NumberCalculator(short number,short secret_number,Stadistics& stadistics);
-    std::string isValid(int& trys,bool& is_valid);
-    std::string calculate(int& trys);
+    bool isValid(int& trys,std::stringstream& ss);
+    void calculate(int& trys,std::stringstream& ss);
 };
 
 #endif

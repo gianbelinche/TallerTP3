@@ -10,30 +10,29 @@ NumberCalculator::NumberCalculator(short number,short secret_number,
     secret_digits.push_back(secret_number/100);
 }
 
-std::string NumberCalculator::isValid(int& trys,bool& is_valid){
+bool NumberCalculator::isValid(int& trys,std::stringstream& ss){
     trys++;
     if (trys >= 10){
-        is_valid = false;
         trys = 10;
         stadistics.lose();
-        return "Perdiste\n";
+        ss << "Perdiste\n";
+        return false;
     }
     if (number < 100 || number > 999){
-        is_valid = false;
-        return "Número inválido. Debe ser de 3 cifras no repetidas\n";
+        ss << "Número inválido. Debe ser de 3 cifras no repetidas\n";
+        return false;
     }
 
     if (number_digits[0] == number_digits[1] || 
     number_digits[0] == number_digits[2] || 
     number_digits[1] == number_digits[2]){
-        is_valid = false;
-        return "Número inválido. Debe ser de 3 cifras no repetidas\n";
+        ss << "Número inválido. Debe ser de 3 cifras no repetidas\n";
+        return false;
     }
-    is_valid = true;
-    return "";    
+    return true;    
 }
 
-std::string NumberCalculator::calculate(int& trys){
+void NumberCalculator::calculate(int& trys,std::stringstream& ss){
     int correct = 0;
     int regular = 0;
 
@@ -45,21 +44,21 @@ std::string NumberCalculator::calculate(int& trys){
     }
     int bad = 3 - correct - regular;
     if (bad == 3){
-        return "3 mal\n";
+        ss << "3 mal\n";
+        return;
     }
     if (correct == 3){
         trys = 10;
         stadistics.win();
-        return "Ganaste\n";
+        ss << "Ganaste\n";
+        return;
     }
-    std::string answer = "";
     if (correct != 0 && regular != 0) {
-        answer += std::to_string(correct) + " bien, ";
-        answer += std::to_string(regular) + " regular";
+        ss << correct << " bien, " << regular << " regular";
     } else if (correct != 0){
-        answer += std::to_string(correct) + " bien";
+        ss << correct << " bien";
     } else if (regular !=0) {
-        answer += std::to_string(regular) + " regular";
+        ss << regular << " regular";
     }
-    return answer + "\n";
+    ss << "\n";
 }
