@@ -5,6 +5,10 @@
 #include "server_NumberCalculator.h"
 #include <arpa/inet.h>
 #include <vector>
+#define HELP_MSG "Comandos válidos:\n\tAYUDA: despliega la lista de comandos \
+válidos\n\tRENDIRSE: pierde el juego automáticamente\n\tXXX: Número de 3 \
+cifras a ser enviado al servidor para adivinar el número secreto\n"
+#define LOSE_MSG "Perdiste\n"
 
 ClientProxy::ClientProxy(Socket&& socket,uint16_t number,Stadistics&& stadistics):
 socket(std::move(socket)), secret_number(number), 
@@ -16,14 +20,11 @@ void ClientProxy::run(){
         socket.Recv(&buff,1);
         std::stringstream answer;
         if (buff == 'h'){
-            answer << "Comandos válidos:\n\tAYUDA: despliega la lista de ";
-            answer << "comandos válidos\n\tRENDIRSE: pierde el juego";
-            answer << " automáticamente\n\tXXX: Número de 3 cifras a ser ";
-            answer << "enviado al servidor para adivinar el número secreto\n";
+            answer << HELP_MSG;
         } else if (buff == 's'){
             trys = 10;
             stadistics.lose();
-            answer << "Perdiste\n";
+            answer << LOSE_MSG;
         } else if (buff == 'n'){
             char buff2[2];
             socket.Recv(buff2,2);

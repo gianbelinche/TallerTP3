@@ -4,10 +4,11 @@
 #include "server_ClientManager.h"
 #include <iostream>
 #include "server_Stadistics.h"
+#define ERROR_MSG "Error: argumentos invalidos.\n"
 
 int Initializer::initialice(int argc, char* argv[]){
     if (argc != 3){
-        std::cerr << "Error: argumentos invalidos.\n";
+        std::cerr << ERROR_MSG;
         return 1;
     }
     SecretNumberParser parser;

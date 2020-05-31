@@ -2,6 +2,8 @@
 #include <string>
 #include "client_CommandHandler.h"
 #include "common_OSError.h"
+#define WIN_MSG "Ganaste\n"
+#define LOSE_MSG "Perdiste\n"
 
 int main(int argc, char* argv[]){
     CommandHandler commandHandler;
@@ -14,7 +16,7 @@ int main(int argc, char* argv[]){
             commandHandler.send(command,std::move(socket));
             const std::string answer = commandHandler.recv(std::move(socket));
             std::cout << answer;
-            if (answer == "Perdiste\n" || answer == "Ganaste\n"){
+            if (answer == LOSE_MSG || answer == WIN_MSG){
                 break;
             }
         } catch(OSError& e){

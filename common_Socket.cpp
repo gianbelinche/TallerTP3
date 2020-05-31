@@ -9,6 +9,9 @@
 #define SEND 0
 #define RECEIVE 1
 #define ERROR -1
+#define GETADDRINFO_ERROR "Fallo en getaddrinfo\n"
+#define SEND_AND_RECV_ERROR "Error al Enviar o Recibir a través del socket\n"
+#define CLOSED_SOCKET_ERROR "Socket esta cerrado\n"
 
 Socket::Socket(){
     num_socket = 0;
@@ -58,7 +61,7 @@ const char* port,bindorconnect_t boc){
     hints.ai_flags = 0;
     int error = 0;
     if (getaddrinfo(adress,port,&hints,&res) != 0){
-        throw OSError("Fallo en getaddrinfo\n");
+        throw OSError(GETADDRINFO_ERROR);
     }                                                                        
     int sfd;
     for (rp = res; rp != NULL; rp = rp->ai_next) {
@@ -110,7 +113,7 @@ int Socket::auxSendAndRecv(char* buffer,size_t len,int send_or_recv){
             break;
         }
         if (send_amount == ERROR){
-            throw OSError("Error al Enviar o Recibir a través del socket\n");
+            throw OSError(SEND_AND_RECV_ERROR);
         }
         length -= send_amount;
         total += send_amount;
@@ -137,7 +140,7 @@ void Socket::Accept(Socket&& new_socket){
     while (error == ERROR){
         error = accept(num_socket,adress,len_adress);
         if (errno == EBADF){
-            throw OSError("Socket esta cerrado\n");
+            throw OSError(CLOSED_SOCKET_ERROR);
         }
     }
     new_socket.num_socket = error;

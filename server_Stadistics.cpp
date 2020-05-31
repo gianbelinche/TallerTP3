@@ -1,5 +1,7 @@
 #include "server_Stadistics.h"
 #include <iostream>
+#define WIN_STADISTICS "Estadísticas:\n\tGanadores:  "
+#define LOSE_STADISTICS "\n\tPerdedores: "
 
 void Stadistics::win(){
     std::unique_lock<std::mutex> lk(m);
@@ -13,6 +15,6 @@ void Stadistics::lose(){
 
 void Stadistics::print() {
     std::unique_lock<std::mutex> lk(m);
-    std::cout << "Estadísticas:\n\tGanadores:  " << wins 
-    << "\n\tPerdedores: " << loses << "\n";
+    std::cout << WIN_STADISTICS << wins 
+    << LOSE_STADISTICS << loses << "\n";
 }

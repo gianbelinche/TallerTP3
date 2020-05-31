@@ -1,4 +1,10 @@
 #include "server_NumberCalculator.h"
+#define LOSE_MSG "Perdiste\n"
+#define INVALID_MSG "Número inválido. Debe ser de 3 cifras no repetidas\n"
+#define BAD_MSG "3 mal\n"
+#define WIN_MSG "Ganaste\n"
+#define GOOD_MSG " bien"
+#define REGULAR_MSG " regular"
 
 NumberCalculator::NumberCalculator(uint16_t number,uint16_t secret_number,
  Stadistics& stadistics) : number(number), stadistics(stadistics){
@@ -15,18 +21,18 @@ bool NumberCalculator::isValid(int& trys,std::stringstream& ss){
     if (trys >= 10){
         trys = 10;
         stadistics.lose();
-        ss << "Perdiste\n";
+        ss << LOSE_MSG;
         return false;
     }
     if (number < 100 || number > 999){
-        ss << "Número inválido. Debe ser de 3 cifras no repetidas\n";
+        ss << INVALID_MSG;
         return false;
     }
 
     if (number_digits[0] == number_digits[1] || 
     number_digits[0] == number_digits[2] || 
     number_digits[1] == number_digits[2]){
-        ss << "Número inválido. Debe ser de 3 cifras no repetidas\n";
+        ss << INVALID_MSG;
         return false;
     }
     return true;    
@@ -44,21 +50,21 @@ void NumberCalculator::calculate(int& trys,std::stringstream& ss){
     }
     int bad = 3 - correct - regular;
     if (bad == 3){
-        ss << "3 mal\n";
+        ss << BAD_MSG;
         return;
     }
     if (correct == 3){
         trys = 10;
         stadistics.win();
-        ss << "Ganaste\n";
+        ss << WIN_MSG;
         return;
     }
     if (correct != 0 && regular != 0) {
-        ss << correct << " bien, " << regular << " regular";
+        ss << correct << GOOD_MSG << ", " << regular << REGULAR_MSG;
     } else if (correct != 0){
-        ss << correct << " bien";
+        ss << correct << GOOD_MSG;
     } else if (regular !=0) {
-        ss << regular << " regular";
+        ss << regular << REGULAR_MSG;
     }
     ss << "\n";
 }

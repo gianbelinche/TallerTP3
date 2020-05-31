@@ -1,6 +1,7 @@
 #include "server_Initializer.h"
 #include "common_OSError.h"
 #include <iostream>
+#define UNKNOWN_ERROR "Unknown error\n"
 
 int main(int argc,char* argv[]){
     try {
@@ -10,6 +11,6 @@ int main(int argc,char* argv[]){
         std::cerr << e.what();
         return 1;
     } catch(...){
-        std::cerr << "Unknown error\n";
+        std::cerr << UNKNOWN_ERROR;
     }
 }

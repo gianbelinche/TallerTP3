@@ -3,6 +3,8 @@
 #include <functional>
 #include <string>
 #include <inttypes.h>
+#define OUT_OF_RANGE_ERROR "Error: archivo con números fuera de rango\n"
+#define INVALID_NUMBER_ERROR "Error: formato de los números inválidos\n"
 
 bool hasRepeatedDigits(uint16_t number){
     uint16_t first_digit = number % 10;
@@ -18,10 +20,10 @@ void SecretNumberParser::parse(std::string file_name,CircleVector&& vector){
     while (getline(file,line)){
         uint16_t number = (uint16_t) stoi(line);
         if (number < 100 || number > 999){
-            throw OSError("Error: archivo con números fuera de rango\n");
+            throw OSError(OUT_OF_RANGE_ERROR);
         }
         if (hasRepeatedDigits(number)){
-            throw OSError("Error: formato de los números inválidos\n");
+            throw OSError(INVALID_NUMBER_ERROR);
         }
         vector.push_back(number);
     }

@@ -5,6 +5,7 @@
 #include "common_OSError.h"
 #include <string>
 #include <utility>
+#define ERROR_MSG "Error: comando inválido. Escriba AYUDA para obtener ayuda\n"
 
 CommandHandler::CommandHandler(){
     Command command;
@@ -23,7 +24,7 @@ void CommandHandler::send(std::string command,Socket&& socket) {
         commandNumber.send(std::move(socket));
     } else {
         throw 
-        OSError("Error: comando inválido. Escriba AYUDA para obtener ayuda\n");
+        OSError(ERROR_MSG);
     }
 }
 
