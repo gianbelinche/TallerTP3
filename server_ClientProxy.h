@@ -2,7 +2,7 @@
 #define CLASS_CLIENT_PROXY
 #include "common_Socket.h"
 #include <utility>
-#include <string>
+#include <sstream>
 #include <thread>
 #include "server_Stadistics.h"
 #include <inttypes.h>
@@ -14,6 +14,7 @@ private:
     Stadistics&& stadistics;
     int trys;
     std::thread thread;
+    void fillAnswer(std::stringstream& answer,char buff);
 public:
     ClientProxy(Socket&& socket,uint16_t number,Stadistics&& stadistics);
     //Recibe el comando del cliente y genera la respuesta adecuada

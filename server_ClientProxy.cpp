@@ -14,28 +14,32 @@ ClientProxy::ClientProxy(Socket&& socket,uint16_t number,Stadistics&& stadistics
 socket(std::move(socket)), secret_number(number), 
 stadistics(std::move(stadistics)), trys(0), thread(std::ref(*this)) {}
 
+void ClientProxy::fillAnswer(std::stringstream& answer,char buff){
+    if (buff == 'h'){
+        answer << HELP_MSG;
+    } else if (buff == 's'){
+        trys = 10;
+        stadistics.lose();
+        answer << LOSE_MSG;
+    } else if (buff == 'n'){
+        char buff2[2];
+        socket.Recv(buff2,2);
+        uint16_t* number_ptr = (uint16_t*) buff2;
+        uint16_t number = ntohs(*number_ptr);
+        NumberCalculator calculator(number,secret_number,stadistics);
+        bool is_valid = calculator.isValid(trys,answer);
+        if (is_valid){
+            calculator.calculate(trys,answer);
+        }
+    }
+}
+
 void ClientProxy::run(){
     while (true){
         char buff;
         socket.Recv(&buff,1);
         std::stringstream answer;
-        if (buff == 'h'){
-            answer << HELP_MSG;
-        } else if (buff == 's'){
-            trys = 10;
-            stadistics.lose();
-            answer << LOSE_MSG;
-        } else if (buff == 'n'){
-            char buff2[2];
-            socket.Recv(buff2,2);
-            uint16_t* number_ptr = (uint16_t*) buff2;
-            uint16_t number = ntohs(*number_ptr);
-            NumberCalculator calculator(number,secret_number,stadistics);
-            bool is_valid = calculator.isValid(trys,answer);
-            if (is_valid){
-                calculator.calculate(trys,answer);
-            }
-        }
+        this->fillAnswer(answer,buff);
         Serializer serializer;
         char* serialized_answer = (char*) malloc(answer.str().length() + 4);
         serializer.serialize(answer.str(),serialized_answer);
