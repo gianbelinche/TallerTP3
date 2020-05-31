@@ -13,19 +13,19 @@ is_valid(true) {}
 
 void ClientProxy::run(){
     while (true){
-        char buff[1];
-        socket.Recv(buff,1);
+        char buff;
+        socket.Recv(&buff,1);
         std::string answer = "";
-        if (buff[0] == 'h'){
+        if (buff == 'h'){
             answer += "Comandos válidos:\n\tAYUDA: despliega la lista de ";
             answer += "comandos válidos\n\tRENDIRSE: pierde el juego";
             answer += " automáticamente\n\tXXX: Número de 3 cifras a ser ";
             answer += "enviado al servidor para adivinar el número secreto\n";
-        } else if (buff[0] == 's'){
+        } else if (buff == 's'){
             trys = 10;
             stadistics.lose();
             answer += "Perdiste\n";
-        } else if (buff[0] == 'n'){
+        } else if (buff == 'n'){
             char buff2[2];
             socket.Recv(buff2,2);
             short* number_ptr = (short*) buff2;
