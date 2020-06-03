@@ -6,7 +6,7 @@
 ClientManager::ClientManager(Socket&& server_socket,CircleVector&& vector,
 Stadistics&& stadistics,char* port) : server_socket(std::move(server_socket)),
 vector(std::move(vector)), stadistics(std::move(stadistics)),
-thread(std::ref(*this)), keep_accepting(true) {
+thread(std::ref(*this)),list(), keep_accepting(true) {
     server_socket.Bind(0,port);
     server_socket.Listen(1);
 }

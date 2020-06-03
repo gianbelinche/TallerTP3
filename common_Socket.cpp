@@ -39,6 +39,9 @@ Socket::~Socket(){
 
 Socket::Socket(Socket&& other){
     this->num_socket = other.num_socket;
+    this->free = 0;
+    this->closed = false;
+    this->res = 0;
     other.num_socket = -1;
 }
 
