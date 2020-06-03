@@ -5,13 +5,17 @@
 #include "server_NumberCalculator.h"
 #include <arpa/inet.h>
 #include <vector>
-#define HELP_MSG "Comandos válidos:\n\tAYUDA: despliega la lista de comandos \
-válidos\n\tRENDIRSE: pierde el juego automáticamente\n\tXXX: Número de 3 \
-cifras a ser enviado al servidor para adivinar el número secreto\n"
+//No me encanta esta forma de hacer el define, pero si lo dejo como estaba
+//antes, el verificador de normas de codificación se queja porque
+//no le gustan las strings multilinea, y esta string es muy larga
+//para ponerla en una unica linea, ya que superaria los 80 caracteres
+#define HELP_MSG "Comandos válidos:\n\tAYUDA: despliega la lista de comandos"<<\
+"válidos\n\tRENDIRSE: pierde el juego automáticamente\n\tXXX: Número de 3"<< \
+"cifras a ser enviado al servidor para adivinar el número secreto\n"
 #define LOSE_MSG "Perdiste\n"
 
-ClientProxy::ClientProxy(Socket&& socket,uint16_t number,Stadistics&& stadistics):
-socket(std::move(socket)), secret_number(number), 
+ClientProxy::ClientProxy(Socket&& socket,uint16_t number,
+Stadistics&& stadistics):socket(std::move(socket)), secret_number(number), 
 stadistics(std::move(stadistics)), trys(0), thread(std::ref(*this)) {}
 
 void ClientProxy::fillAnswer(std::stringstream& answer,char buff){
