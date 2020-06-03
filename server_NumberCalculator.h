@@ -12,7 +12,8 @@ private:
     std::vector<uint16_t> secret_digits;
     Stadistics& stadistics;
 public:        
-    NumberCalculator(uint16_t number,uint16_t secret_number,Stadistics& stadistics);
+    NumberCalculator(uint16_t number,uint16_t secret_number,
+    Stadistics& stadistics);
     bool isValid(int& trys,std::stringstream& ss);
     void calculate(int& trys,std::stringstream& ss);
 };
