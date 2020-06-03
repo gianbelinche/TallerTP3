@@ -9,7 +9,7 @@
 
 class ClientProxy {
 private:
-    Socket&& socket;
+    Socket socket;
     uint16_t secret_number;
     Stadistics&& stadistics;
     int trys;

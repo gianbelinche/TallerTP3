@@ -135,7 +135,7 @@ void Socket::Listen(int client_amount){
     }
 }
 
-void Socket::Accept(Socket&& new_socket){
+void Socket::Accept(Socket& new_socket){
     int error = ERROR;
     while (error == ERROR){
         error = accept(num_socket,adress,len_adress);

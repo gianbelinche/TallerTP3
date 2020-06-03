@@ -48,7 +48,7 @@ public:
     void Listen(int client_amount);
     //Acepta la conexión de un cliente
     //Devuelve el socket del nuevo cliente
-    void Accept(Socket&& new_socket);
+    void Accept(Socket& new_socket);
     //Cierra el socket
     void Close();
     ~Socket();    

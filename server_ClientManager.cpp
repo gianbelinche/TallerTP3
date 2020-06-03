@@ -6,7 +6,7 @@
 ClientManager::ClientManager(Socket&& server_socket,CircleVector&& vector,
 Stadistics&& stadistics,char* port) : server_socket(std::move(server_socket)),
 vector(std::move(vector)), stadistics(std::move(stadistics)),
-thread(std::ref(*this)), list(), keep_accepting(true) {
+thread(std::ref(*this)), keep_accepting(true) {
     server_socket.Bind(0,port);
     server_socket.Listen(1);
 }
@@ -22,12 +22,11 @@ void ClientManager::run(){
                 }
             }
 
-            Socket* client_socket = new Socket;
-            socket_list.push_back(client_socket);
-            server_socket.Accept(std::move(*client_socket));
+            Socket client_socket;
+            server_socket.Accept(client_socket);
             std::unique_ptr<ClientProxy> client
             (new ClientProxy
-            (std::move(*client_socket),vector.next(),std::move(stadistics)));
+            (std::move(client_socket),vector.next(),std::move(stadistics)));
             list.push_back(std::move(client));
         }    
     } catch(OSError& e){
@@ -51,13 +50,6 @@ void ClientManager::stop(){
 }
 
 ClientManager::~ClientManager(){
-    std::list< std::unique_ptr<ClientProxy> >::iterator it;
-    for (it = list.begin(); it != list.end(); it++){
-        (*(*it)).join();
-    }
-    std::list<Socket*>::iterator it2;
-    for (it2 = socket_list.begin(); it2 != socket_list.end(); it2++){
-        delete (*it2);
-    }
+    this->stop();
     thread.join();
 }

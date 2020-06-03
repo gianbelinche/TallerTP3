@@ -17,7 +17,6 @@ private:
     Stadistics&& stadistics;
     std::thread thread;
     std::list< std::unique_ptr<ClientProxy> > list;
-    std::list<Socket*> socket_list;
     std::atomic<bool> keep_accepting;
 public:
     ClientManager(Socket&& server_socket,CircleVector&& vector,
